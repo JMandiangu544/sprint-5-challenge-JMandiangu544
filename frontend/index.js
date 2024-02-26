@@ -17,7 +17,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     const fetchAmazonData = async () => {
       try {
         const amazonResponse = await fetch('https://www.amazon.com/gp/css/homepage.html');
-        const amazonData = await amazonResponse.json(); // Adjust this based on the actual structure of the data
+        const amazonData = await amazonResponse.json();
         return amazonData;
       } catch (error) {
         console.error('Error fetching Amazon data:', error);
@@ -46,7 +46,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       // Render components to the DOM using the combined data
       const footer = document.querySelector('footer');
       const currentYear = new Date().getFullYear();
-      footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`;
+      footer.textContent = `© JOBERTHY ${currentYear}`;
   
       // You can continue rendering components based on the combined data
       // Example: renderZoetisComponents(combinedData.zoetis);
