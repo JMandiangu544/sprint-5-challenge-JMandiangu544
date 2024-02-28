@@ -24,7 +24,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         console.error('Error fetching mentors data:', error);
         return null;
       }
-    };
+    }
     
   
     // Step 3: Combine data obtained from Zoetis and Amazon into a single data structure.
@@ -32,17 +32,17 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       const learnersData = await fetchLearnersData();
       const mentorsData = await fetchMentorsData();
       return { learners: learnersData, mentors: mentorsData };
-    };
+    }
     
   
     // Step 4: Render repeatable components to the DOM using the combined data.
     async function renderComponents() {
       const combinedData = await combineData();
       // Render repeatable components to the DOM using combinedData
-    };
+    }
 
     // Call the renderComponents function to start the process
-    renderComponents();
+    renderComponents()
 
     const footer = document.querySelector('footer')
   const currentYear = new Date().getFullYear()
