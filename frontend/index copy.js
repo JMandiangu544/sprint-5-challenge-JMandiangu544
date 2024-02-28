@@ -2,7 +2,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   // 👇 WORK WORK BELOW THIS LINE 👇
 
     // Step 1: Obtain JSON data from http://localhost:3003/api/learners.
-    async function fetchLearnersData() {
+    const fetchLearnersData = async () => {
       try {
         const response = await fetch('http://localhost:3003/api/learners');
         const data = await response.json();
@@ -11,11 +11,11 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         console.error('Error fetching learners data:', error);
         return null;
       }
-    }    
+    };
     
   
     // Step 2: Obtain JSON data from http://localhost:3003/api/mentors.
-    async function fetchMentorsData() {
+    const fetchMentorsData = async () => {
       try {
         const response = await fetch('http://localhost:3003/api/mentors');
         const data = await response.json();
@@ -28,17 +28,20 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     
   
     // Step 3: Combine data obtained from Zoetis and Amazon into a single data structure.
-    async function combineData() {
+    const combineData = async () => {
       const learnersData = await fetchLearnersData();
       const mentorsData = await fetchMentorsData();
-      return { learners: learnersData, mentors: mentorsData };
+      const combinedData = { learners: learnersData, mentors: mentorsData };
+      return combinedData;
     };
     
   
     // Step 4: Render repeatable components to the DOM using the combined data.
-    async function renderComponents() {
+    const renderComponents = async () => {
       const combinedData = await combineData();
-      // Render repeatable components to the DOM using combinedData
+      // Render components to the DOM using combinedData
+      // Example: renderLearners(combinedData.learners);
+      // Example: renderMentors(combinedData.mentors);
     };
 
     // Call the renderComponents function to start the process
@@ -49,8 +52,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
   }
 
-  // Call the renderComponents function to initiate the rendering process:
-  sprintChallenge5(); // Call the function to start the process
+  sprintChallenge5();
 
   
 
