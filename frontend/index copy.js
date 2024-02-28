@@ -11,7 +11,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         console.error('Error fetching learners data:', error);
         return null;
       }
-    };
+    }
     
   
     // Step 2: Obtain JSON data from http://localhost:3003/api/mentors.
