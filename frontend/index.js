@@ -1,7 +1,7 @@
 async function sprintChallenge5() { // Note the async keyword, in case you wish to use `await` inside sprintChallenge5
   // 👇 WORK WORK BELOW THIS LINE 👇
 
-    // Step 1: Obtain JSON data from http://localhost:3003/api/learners.
+    // Step 1: Obtain JSON data from http://localhost:3003/api/learners
     async function fetchLearnersData() {
       try {
         const response = await fetch('http://localhost:3003/api/learners');
@@ -14,7 +14,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     }    
     
   
-    // Step 2: Obtain JSON data from http://localhost:3003/api/mentors.
+    // Step 2: Obtain JSON data from http://localhost:3003/api/mentors
     async function fetchMentorsData() {
       try {
         const response = await fetch('http://localhost:3003/api/mentors');
