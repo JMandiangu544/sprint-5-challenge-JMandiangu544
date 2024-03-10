@@ -27,7 +27,6 @@ async function sprintChallenge5() {
 // Call the sprintChallenge5 function
 sprintChallenge5();
 
-
   // 👆 WORK WORK ABOVE THIS LINE 👆
 
 
