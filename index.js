@@ -1,31 +1,49 @@
 async function sprintChallenge5() {
-  // Obtain JSON data from a web service
-  const axios = require('axios')
-  const nodeFetch = require('node-fetch')
-  
-  globalThis.axios = axios
-  globalThis.fetch = nodeFetch
-  globalThis.Request = nodeFetch.Request
-  globalThis.Response = nodeFetch.Response
+  // Fetch data from Endpoint A and Endpoint B
+  const [learnersResponse, mentorsResponse] = await Promise.all([
+    axios.get('http://localhost:3003/api/learners'),
+    axios.get('http://localhost:3003/api/mentors')
+  ]);
 
-  const [data1, data2] = await Promise.all([
-    fetch('URL_TO_SERVICE_1').then(response => response.json()),
-    fetch('URL_TO_SERVICE_2').then(response => response.json())
-    // This makes fetch and axios work in the tests
-  ])
+  // Extract data from the responses
+  const learners = learnersResponse.data;
+  const mentors = mentorsResponse.data;
 
-  // Combine data obtained from different sources into a single data structure
-  const combinedData = { ...data1, ...data2 }; // Example combination, modify as needed
+  // Combine data from both endpoints
+  const combinedData = learners.map(learner => {
+    // Find mentors' names based on mentor IDs
+    const mentorNames = learner.mentors.map(mentorId => {
+      const mentor = mentors.find(mentor => mentor.id === mentorId);
+      return mentor ? mentor.fullName : `Unknown Mentor ${mentorId}`;
+    });
 
-  // Render repeatable components to the DOM using the combined data
-  const container = document.querySelector('.container'); // Adjust selector as needed
+    // Return learner data with mentor names
+    return {
+      id: learner.id,
+      email: learner.email,
+      fullName: learner.fullName,
+      mentors: mentorNames
+    };
+  });
 
-  // Example: Render data as text content
-  for (const key in combinedData) {
-    const element = document.createElement('div');
-    element.textContent = `${key}: ${combinedData[key]}`;
-    container.appendChild(element);
+  // Create a component function to generate a Learner Card
+  function buildLearnerCard(learner) {
+    const card = document.createElement('div');
+    card.classList.add('learner-card');
+    card.innerHTML = `
+      <h2>${learner.fullName}</h2>
+      <p>Email: ${learner.email}</p>
+      <p>Mentors: ${learner.mentors.join(', ')}</p>
+    `;
+    return card;
   }
+
+  // Render Learner Cards to the DOM
+  const learnerContainer = document.querySelector('.learner-container');
+  combinedData.forEach(learner => {
+    const card = buildLearnerCard(learner);
+    learnerContainer.appendChild(card);
+  });
 
   // Set footer content
   const footer = document.querySelector('footer');
@@ -35,7 +53,6 @@ async function sprintChallenge5() {
 
 // Call the sprintChallenge5 function
 sprintChallenge5();
-
 
   // 👆 WORK WORK ABOVE THIS LINE 👆
 
