@@ -1,18 +1,18 @@
 async function sprintChallenge5() {
   // Obtain JSON data from a web service
+  const axios = require('axios')
+  const nodeFetch = require('node-fetch')
+  
+  globalThis.axios = axios
+  globalThis.fetch = nodeFetch
+  globalThis.Request = nodeFetch.Request
+  globalThis.Response = nodeFetch.Response
+
   const [data1, data2] = await Promise.all([
     fetch('URL_TO_SERVICE_1').then(response => response.json()),
     fetch('URL_TO_SERVICE_2').then(response => response.json())
     // This makes fetch and axios work in the tests
   ])
-const axios = require('axios')
-const nodeFetch = require('node-fetch')
-
-globalThis.axios = axios
-globalThis.fetch = nodeFetch
-globalThis.Request = nodeFetch.Request
-globalThis.Response = nodeFetch.Response
-  
 
   // Combine data obtained from different sources into a single data structure
   const combinedData = { ...data1, ...data2 }; // Example combination, modify as needed
