@@ -46,10 +46,11 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 
     // Call the renderComponents function to start the process
     renderComponents();
-
+    
     const footer = document.querySelector('footer')
   const currentYear = new Date().getFullYear()
-  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
+  console.log(currentYear)
+  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear - 1}`
   }
 
   sprintChallenge5();
