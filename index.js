@@ -39,7 +39,12 @@ async function sprintChallenge5() {
   }
 
   // Render Learner Cards to the DOM
-  const learnerContainer = document.querySelector('.info-container');
+  let element = document.querySelector('.info-class');
+if (element) {
+    element.textContent = 'No learner is selected';
+}
+
+  const learnerContainer = document.querySelector('.learner-container');
   combinedData.forEach(learner => {
     const card = buildLearnerCard(learner);
     learnerContainer.appendChild(card);
