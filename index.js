@@ -45,7 +45,7 @@ async function sprintChallenge5() {
     learnerContainer.appendChild(card);
   });
 
-  // Set footer content
+
   const footer = document.querySelector('footer');
   const currentYear = new Date().getFullYear();
   footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`;
