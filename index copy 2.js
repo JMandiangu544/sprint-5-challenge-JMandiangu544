@@ -1,32 +1,75 @@
+
 async function sprintChallenge5() {
-  // Obtain JSON data from a web service
-  const [data1, data2] = await Promise.all([
-    fetch('URL_TO_SERVICE_1').then(response => response.json()),
-    fetch('URL_TO_SERVICE_2').then(response => response.json())
-  ]);
-
-  // Combine data obtained from different sources into a single data structure
-  const combinedData = { ...data1, ...data2 }; // Example combination, modify as needed
-
-  // Render repeatable components to the DOM using the combined data
-  const container = document.querySelector('.container'); // Adjust selector as needed
-
-  // Example: Render data as text content
-  for (const key in combinedData) {
-    const element = document.createElement('div');
-    element.textContent = `${key}: ${combinedData[key]}`;
-    container.appendChild(element);
-  }
-
-  // Set footer content
-  const footer = document.querySelector('footer');
-  const currentYear = new Date().getFullYear();
-  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`;
+    // Select the footer element to update with the current year
+    const footer = document.querySelector('footer');
+    
+    // Get the current year
+    const currentYear = new Date().getFullYear();
+    
+    // Update the footer text with the institute name and current year
+    footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`;
+    
+    // Below this line, you can start working with the data from the two endpoints
+    // Make Axios requests to Endpoint A and Endpoint B
+    const endpointAResponse = await axios.get('http://localhost:3003/api/learners');
+    const endpointBResponse = await axios.get('http://localhost:3003/api/mentors');
+    
+    // Extract mentor IDs and names from the responses
+    const mentorsMap = new Map();
+    endpointBResponse.data.forEach(mentor => {
+        mentorsMap.set(mentor.id, mentor.name);
+    });
+    
+    // Combine mentor IDs with real names for each learner
+    const learnersData = endpointAResponse.data.map(learner => {
+        const mentorsNames = learner.mentors.map(mentorId => mentorsMap.get(mentorId));
+        return {
+            ...learner,
+            mentors: mentorsNames
+        };
+    });
+    
+    // Function to create a Learner Card for a single learner
+    function createLearnerCard(learner) {
+        const card = document.createElement('div');
+        card.classList.add('learner-card');
+        
+        const name = document.createElement('h2');
+        name.textContent = learner.name;
+        name.classList.add('learner-name');
+        
+        const age = document.createElement('p');
+        age.textContent = `Age: ${learner.age}`;
+        age.classList.add('learner-age');
+        
+        const mentorsList = document.createElement('ul');
+        mentorsList.classList.add('mentor-list');
+        
+        learner.mentors.forEach(mentor => {
+            const mentorItem = document.createElement('li');
+            mentorItem.textContent = mentor;
+            mentorsList.appendChild(mentorItem);
+        });
+        
+        card.appendChild(name);
+        card.appendChild(age);
+        card.appendChild(mentorsList);
+        
+        return card;
+    }
+    
+    // Loop over the learners data and render Learner Cards
+    const container = document.querySelector('.learners-container');
+    learnersData.forEach(learner => {
+        const learnerCard = createLearnerCard(learner);
+        container.appendChild(learnerCard);
+    });
 }
 
-// Call the sprintChallenge5 function
+// Call the sprintChallenge5 function to start the process
 sprintChallenge5();
-
+CodePalResult.txt
+Displaying CodePalResult.txt.
   // 👆 WORK WORK ABOVE THIS LINE 👆
 
 
