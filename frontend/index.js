@@ -2,22 +2,36 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
   // 👇 WORK WORK BELOW THIS LINE 👇
 
      // Step 1: Obtain JSON data from http://localhost:3003/api/learners.
-  
-        const response1 = await fetch('http://localhost:3003/api/learners');
-        const data1 = await response1.json();
-        return data1;
-
+     const fetchLearnersData = async () => {
+      try {
+        const response = await fetch('http://localhost:3003/api/learners');
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error fetching learners data:', error);
+        return null;
+      }
+    }
+    
   
     // Step 2: Obtain JSON data from http://localhost:3003/api/mentors.
+    const fetchMentorsData = async () => {
+      try {
+        const response = await fetch('http://localhost:3003/api/mentors');
+        console.log(response)
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error fetching mentors data:', error);
+        return null;
+      }
+    };
     
-        const response2 = await fetch('http://localhost:3003/api/mentors');
-        const data2 = await response2.json();
-        return data2;
-    
-
+  
+    // Step 3: Combine data obtained from Zoetis and Amazon into a single data structure.
     const combineData = async () => {
-      const learnersData = await response1();
-      const mentorsData = await response2();
+      const learnersData = await fetchLearnersData();
+      const mentorsData = await fetchMentorsData();
       const combinedData = { learners: learnersData, mentors: mentorsData };
       return combinedData;
     };
@@ -36,7 +50,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     
     const footer = document.querySelector('footer')
   const currentYear = new Date().getFullYear()
-  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
+  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear - 1}`
   }
 
   sprintChallenge5();
