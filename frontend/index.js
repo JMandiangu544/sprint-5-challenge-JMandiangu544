@@ -35,7 +35,35 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
       const combinedData = { learners: learnersData, mentors: mentorsData };
       return combinedData;
     };
-    
+
+     // Function to create a Learner Card for a single learner
+     function createLearnerCard(learner) {
+      const card = document.createElement('div');
+      card.classList.add('learner-card');
+      
+      const name = document.createElement('h2');
+      name.textContent = learner.name;
+      name.classList.add('learner-name');
+      
+      const age = document.createElement('p');
+      age.textContent = `Age: ${learner.age}`;
+      age.classList.add('learner-age');
+      
+      const mentorsList = document.createElement('ul');
+      mentorsList.classList.add('mentor-list');
+      
+      learner.mentors.forEach(mentor => {
+          const mentorItem = document.createElement('li');
+          mentorItem.textContent = mentor;
+          mentorsList.appendChild(mentorItem);
+      });
+      
+      card.appendChild(name);
+      card.appendChild(age);
+      card.appendChild(mentorsList);
+      
+      return card;
+     }
   
     // Step 4: Render repeatable components to the DOM using the combined data.
     const renderComponents = async () => {
