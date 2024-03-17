@@ -68,8 +68,6 @@ async function sprintChallenge5() {
 
 // Call the sprintChallenge5 function to start the process
 sprintChallenge5();
-CodePalResult.txt
-Displaying CodePalResult.txt.
   // 👆 WORK WORK ABOVE THIS LINE 👆
 
 
