@@ -1,65 +1,67 @@
-async function sprintChallenge5() { // Note the async keyword, in case you wish to use `await` inside sprintChallenge5
-  // 👇 WORK WORK BELOW THIS LINE 👇
+async function sprintChallenge5() {
+  // Fetch data from Endpoint A and Endpoint B
+  const [learnersResponse, mentorsResponse] = await Promise.all([
+    axios.get('http://localhost:3003/api/learners'),
+    axios.get('http://localhost:3003/api/mentors')
+  ]);
 
-     // Step 1: Obtain JSON data from http://localhost:3003/api/learners.
-     const fetchLearnersData = async () => {
-      try {
-        const response = await fetch('http://localhost:3003/api/learners');
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error('Error fetching learners data:', error);
-        return null;
-      }
-    }
-    
-  
-    // Step 2: Obtain JSON data from http://localhost:3003/api/mentors.
-    const fetchMentorsData = async () => {
-      try {
-        const response = await fetch('http://localhost:3003/api/mentors');
-        console.log(response)
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error('Error fetching mentors data:', error);
-        return null;
-      }
-    };
-    
-  
-    // Step 3: Combine data obtained from Zoetis and Amazon into a single data structure.
-    const combineData = async () => {
-      const learnersData = await fetchLearnersData();
-      const mentorsData = await fetchMentorsData();
-      const combinedData = { learners: learnersData, mentors: mentorsData };
-      return combinedData;
-    };
-    
-  
-    // Step 4: Render repeatable components to the DOM using the combined data.
-    const renderComponents = async () => {
-      const combinedData = await combineData();
-      // Render components to the DOM using combinedData
-      // Example: renderLearners(combinedData.learners);
-      // Example: renderMentors(combinedData.mentors);
-    };
+  // Extract data from the responses
+  const learners = learnersResponse.data;
+  const mentors = mentorsResponse.data;
 
-    // Call the renderComponents function to start the process
-    renderComponents();
-    
-    const footer = document.querySelector('footer')
-  const currentYear = new Date().getFullYear()
-  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear - 1}`
+  // Combine data from both endpoints
+  const combinedData = learners.map(learner => {
+    // Find mentors' names based on mentor IDs
+    const mentorNames = learner.mentors.map(mentorId => {
+      const mentor = mentors.find(mentor => mentor.id === mentorId);
+      return mentor ? mentor.fullName : `Unknown Mentor ${mentorId}`;
+    });
+
+    // Return learner data with mentor names
+    return {
+      id: learner.id,
+      email: learner.email,
+      fullName: learner.fullName,
+      mentors: mentorNames
+    };
+  });
+
+  // Create a component function to generate a Learner Card
+  function buildLearnerCard(learner) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.innerHTML = `
+      <h3>${learner.fullName}</h3>
+      <p>Email: ${learner.email}</p>
+      <p>Mentors: ${learner.mentors.join(', ')}</p>
+    `;
+    return card;
   }
 
-  sprintChallenge5();
+  // Render Learner Cards to the DOM
+  let element = document.querySelector('.info-class');
+if (element) {
+    element.textContent = 'No learner is selected';
+}
 
-  
+  const learnerContainer = document.querySelector('.cards');
+  combinedData.forEach(learner => {
+    console.log(learner)
+    const card = buildLearnerCard(learner);
+    learnerContainer.appendChild(card);
+  });
 
-  
+
+  const footer = document.querySelector('footer');
+  const currentYear = new Date().getFullYear();
+  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`;
+}
+
+// Call the sprintChallenge5 function
+sprintChallenge5();
 
   // 👆 WORK WORK ABOVE THIS LINE 👆
+
 
 // ❗ DO NOT CHANGE THE CODE  BELOW
 if (typeof module !== 'undefined' && module.exports) module.exports = { sprintChallenge5 }
