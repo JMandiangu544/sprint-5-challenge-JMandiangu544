@@ -39,7 +39,7 @@ async function sprintChallenge5() {
   }
 
   // Render Learner Cards to the DOM
-  let element = document.querySelector('.info-class');
+  let element = document.querySelector('.cards');
 if (element) {
     element.textContent = 'No learner is selected';
 }
