@@ -54,7 +54,8 @@ if (element) {
 
   const footer = document.querySelector('footer');
   const currentYear = new Date().getFullYear();
-  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`;
+  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear-1}`;
+  console.log(footer)
 }
 
 // Call the sprintChallenge5 function
