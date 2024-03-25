@@ -27,16 +27,33 @@ async function sprintChallenge5() {
   });
 
   // Create a component function to generate a Learner Card
-  function buildLearnerCard(learner) {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.innerHTML = `
-      <h3>${learner.fullName}</h3>
-      <p>Email: ${learner.email}</p>
-      <p>Mentors: ${learner.mentors.join(', ')}</p>
-    `;
-    return card;
-  }
+function buildLearnerCard(learner) {
+  const card = document.createElement('div');
+  card.classList.add('card');
+  card.innerHTML = `
+    <h3>${learner.fullName}</h3>
+    <p>Email: ${learner.email}</p>
+    <ul class="mentors" style="display: none;">
+      ${learner.mentors.map(mentor => `<li>${mentor}</li>`).join('')}
+    </ul>
+  `;
+
+  card.addEventListener('click', () => {
+    const selectedCards = document.querySelectorAll('.card.selected');
+    selectedCards.forEach(selectedCard => {
+      selectedCard.classList.remove('selected');
+    });
+
+    card.classList.add('selected');
+    const info = document.querySelector('.info');
+    if (info) {
+      info.textContent = `The selected learner is ${learner.fullName}`;
+    }
+  });
+
+  return card;
+}
+
 
   // Render Learner Cards to the DOM
   let element = document.querySelector('.cards');
