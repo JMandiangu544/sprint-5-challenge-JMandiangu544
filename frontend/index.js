@@ -33,10 +33,7 @@ function buildLearnerCard(learner) {
   card.innerHTML = `
     <h3>${learner.fullName}</h3>
     <p>Email: ${learner.email}</p>
-    
-    <ul class="mentors" style="display: none;">
-      ${learner.mentors.map(mentor => `<li>${mentor}</li>`).join('')}
-    </ul>
+    <p>Mentors: ${learner.mentors.join(', ')}</p>
   `;
 
   card.addEventListener('click', () => {
