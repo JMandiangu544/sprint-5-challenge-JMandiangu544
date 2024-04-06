@@ -32,21 +32,53 @@ function buildLearnerCard(learner) {
   card.classList.add('card');
   card.innerHTML = `
     <h3>${learner.fullName}</h3>
-    <p>Email: ${learner.email}</p>
-    <p>Mentors: ${learner.mentors.join(', ')}</p>
+    <div>${learner.email}</div>
+    <h4 class="closed">mentors</h4>
+
   `;
+  
+  // Loop over mentors
+  // For each mentors create element (li)
+  // Update the textcontent of (li) to be the mentor
+  // append (li) to the (ul)
+  // append the (ul) to the card
+
+  const mentorsList = document.createElement('ul'); // Create the <ul> element
+
+  // Loop over mentors
+  learner.mentors.forEach(mentor => {
+    const mentorItem = document.createElement('li'); // Create <li> element for each mentor
+    mentorItem.textContent = mentor; // Set mentor name as text content
+    mentorsList.appendChild(mentorItem); // Append <li> to <ul>
+  });
+
+  card.appendChild(mentorsList); // Append <ul> to the card
+
+  // Add event listener to toggle visibility of mentors list
+  card.addEventListener('click', () => {
+    mentorsList.style.display = mentorsList.style.display === 'none' ? 'block' : 'none';
+  })
 
   card.addEventListener('click', () => {
-    const selectedCards = document.querySelectorAll('.card.selected');
-    selectedCards.forEach(selectedCard => {
-      selectedCard.classList.remove('selected');
+    if ( card.classList.contains("selected")) {
+      card.classList.remove("selected")
+      const info = document.querySelector('.info');
+    if (info) {
+      info.textContent = `No learner is selected`;
+    }
+    } else {
+      const selectedCards = document.querySelectorAll('.card.selected');
+    selectedCards.forEach(selectedCards => {
+      selectedCards.classList.remove("selected");
     });
 
-    card.classList.add('selected');
+    card.classList.add("selected");
     const info = document.querySelector('.info');
     if (info) {
       info.textContent = `The selected learner is ${learner.fullName}`;
     }
+    }
+  
   });
 
   return card;
