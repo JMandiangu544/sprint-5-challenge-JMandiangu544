@@ -33,7 +33,7 @@ function buildLearnerCard(learner) {
   card.innerHTML = `
     <h3>${learner.fullName}</h3>
     <div>${learner.email}</div>
-    <h4 class="closed">mentors</h4>
+    <h4 class="closed">Mentors</h4>
 
   `;
   
@@ -47,8 +47,10 @@ function buildLearnerCard(learner) {
 
   // Loop over mentors
   learner.mentors.forEach(mentor => {
+    console.log(mentor)
     const mentorItem = document.createElement('li'); // Create <li> element for each mentor
     mentorItem.textContent = mentor; // Set mentor name as text content
+    console.log(mentorItem)
     mentorsList.appendChild(mentorItem); // Append <li> to <ul>
   });
 
@@ -63,9 +65,7 @@ function buildLearnerCard(learner) {
     if ( card.classList.contains("selected")) {
       card.classList.remove("selected")
       const info = document.querySelector('.info');
-    if (info) {
-      info.textContent = `No learner is selected`;
-    }
+    
     } else {
       const selectedCards = document.querySelectorAll('.card.selected');
     selectedCards.forEach(selectedCards => {
