@@ -14,7 +14,9 @@ async function sprintChallenge5() {
     // Find mentors' names based on mentor IDs
     const mentorNames = learner.mentors.map(mentorId => {
       const mentor = mentors.find(mentor => mentor.id === mentorId);
-      return mentor ? mentor.fullName : `Unknown Mentor ${mentorId}`;
+      
+      const fullName = mentor.firstName + " " + mentor.lastName 
+      return mentor ? fullName : `Unknown Mentor ${mentorId}`;
     });
 
     // Return learner data with mentor names
@@ -47,10 +49,8 @@ function buildLearnerCard(learner) {
 
   // Loop over mentors
   learner.mentors.forEach(mentor => {
-    console.log(mentor)
     const mentorItem = document.createElement('li'); // Create <li> element for each mentor
     mentorItem.textContent = mentor; // Set mentor name as text content
-    console.log(mentorItem)
     mentorsList.appendChild(mentorItem); // Append <li> to <ul>
   });
 
@@ -93,7 +93,6 @@ if (element) {
 
   const learnerContainer = document.querySelector('.cards');
   combinedData.forEach(learner => {
-    console.log(learner)
     const card = buildLearnerCard(learner);
     learnerContainer.appendChild(card);
   });
@@ -102,7 +101,6 @@ if (element) {
   const footer = document.querySelector('footer');
   const currentYear = new Date().getFullYear();
   footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear-1}`;
-  console.log(footer)
 }
 
 // Call the sprintChallenge5 function
