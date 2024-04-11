@@ -48,10 +48,10 @@ function buildLearnerCard(learner) {
   // Loop over mentors
   learner.mentors.forEach(mentor => {
     console.log(mentor)
-    const li = document.createElement('li'); // Create <li> element for each mentor
-    li.textContent = mentor; // Set mentor name as text content
-    console.log(li)
-    mentorsList.appendChild(li); // Append <li> to <ul>
+    const mentorItem = document.createElement('li'); // Create <li> element for each mentor
+    mentorItem.textContent = mentor; // Set mentor name as text content
+    console.log(mentorItem)
+    mentorsList.appendChild(mentorItem); // Append <li> to <ul>
   });
 
   card.appendChild(mentorsList); // Append <ul> to the card
